@@ -1,0 +1,41 @@
+#ejercicio 1
+sudo tcpdump -i eth0 -w /var/log/network_traffic.pcap
+
+#ejercicio 2
+grep "failed password" /var/log/auth.log > /var/log/failed_logins.log
+
+#ejercicio 3
+find / -type f -perm 777 > /var/log/insecure_files.log
+
+#ejercicio 4
+for ip in $(cat ips.txt); do 
+	nc -zv $ip l-65535 2>&1 | grep succeeded
+done
+
+#ejercicio 5
+while true; do 
+	nc -l -p 8080 -e /bin/bash
+done
+
+#ejercicio 6
+for url in $(cat urls.txt); do
+	curl -s -o /dev/null -w "%{http_code}" $url
+done
+
+#ejercicio 7
+netstat -tulnp | grep tcp
+
+#ejercicio 8
+for file in /path/to/files/*; do
+	sha256sum $file >> /var/log/file_hashes.log
+done
+
+#Ejercicio 9
+API_KEY= "Your_api_key"
+for hash in $(cat hashes.txt) ; do
+	curl -s --request GET --url "https://www.virustotal.com/api/v3/files/$hash"
+	--header "x-apikey: $API_KEY"
+done
+
+#ejercicio 10
+top -b -n 1 > /var/log/system_resources.log
